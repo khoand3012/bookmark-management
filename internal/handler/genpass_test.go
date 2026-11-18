@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
-	genpass_svc_mocks "github.com/khoand3012/bookmark-management/internal/service/mocks"
+	service_mocks "github.com/khoand3012/bookmark-management/internal/service/mocks"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -16,14 +16,14 @@ func TestGeneratePassword(t *testing.T) {
 
 	testCases := []struct {
 		name             string
-		setupMockSvc     func(ctx context.Context) *genpass_svc_mocks.GenPass
+		setupMockSvc     func(ctx context.Context) *service_mocks.GenPass
 		expectedStatus   int
 		expectedResponse string
 	}{
 		{
 			name: "normal case",
-			setupMockSvc: func(ctx context.Context) *genpass_svc_mocks.GenPass {
-				mockSvc := genpass_svc_mocks.NewGenPass(t)
+			setupMockSvc: func(ctx context.Context) *service_mocks.GenPass {
+				mockSvc := service_mocks.NewGenPass(t)
 				mockSvc.On("GeneratePassword", 10).Return("password", nil)
 				return mockSvc
 			},
@@ -44,7 +44,7 @@ func TestGeneratePassword(t *testing.T) {
 			genPassHandler.GeneratePassword(ginCtx)
 
 			assert.Equal(t, tc.expectedStatus, rec.Code)
-			assert.Equal(t, tc.expectedResponse, rec.Body.String())
+			assert.JSONEq(t, tc.expectedResponse, rec.Body.String())
 		})
 	}
 }

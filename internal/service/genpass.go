@@ -5,7 +5,7 @@ import (
 	"math/big"
 )
 
-//go:generate mockery --name=GenPass --filename genpass.go --outpkg genpass_svc_mocks
+//go:generate mockery --name=GenPass --filename genpass.go --outpkg service_mocks
 type GenPass interface {
 	GeneratePassword(length int) (string, error)
 }
