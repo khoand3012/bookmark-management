@@ -9,10 +9,6 @@ import (
 
 const DefaultLength = 10
 
-type GenPass interface {
-	GeneratePassword(length int) (string, error)
-}
-
 type genPass struct {
 	svc service.GenPass
 }
