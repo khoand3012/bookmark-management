@@ -1,0 +1,65 @@
+basePath: /
+definitions:
+  handler.ErrorResponse:
+    properties:
+      error:
+        example: Failed to generate password
+        type: string
+    type: object
+  handler.GenPassResponse:
+    properties:
+      password:
+        example: aB3dE9xYz1
+        type: string
+    type: object
+  service.HealthCheckResult:
+    properties:
+      instance_id:
+        example: 3f2b8c1e-7a54-4d0e-9b6a-1c2d3e4f5a6b
+        type: string
+      message:
+        example: OK
+        type: string
+      service_name:
+        example: bookmark_service
+        type: string
+    type: object
+info:
+  contact: {}
+  description: Swagger doc for Bookmark Management API.
+  title: Bookmark Management API
+  version: 1.0.0
+paths:
+  /genpass:
+    get:
+      description: Generates a random 10-character password made of letters (A-Z,
+        a-z) and digits (0-9), using a cryptographically secure random source.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.GenPassResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Generate a random password
+      tags:
+      - password
+  /health-check:
+    get:
+      description: Reports that the service is up, along with its service name and
+        instance ID.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/service.HealthCheckResult'
+      summary: Health check
+      tags:
+      - health
+swagger: "2.0"

@@ -6,9 +6,9 @@ type healthCheck struct {
 }
 
 type HealthCheckResult struct {
-	Message     string `json:"message"`
-	ServiceName string `json:"service_name"`
-	InstanceId  string `json:"instance_id"`
+	Message     string `json:"message" example:"OK"`
+	ServiceName string `json:"service_name" example:"bookmark_service"`
+	InstanceId  string `json:"instance_id" example:"3f2b8c1e-7a54-4d0e-9b6a-1c2d3e4f5a6b"`
 }
 
 //go:generate mockery --name=HealthCheck --filename healthcheck.go --outpkg service_mocks

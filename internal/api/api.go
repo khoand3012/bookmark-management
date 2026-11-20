@@ -5,8 +5,11 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	_ "github.com/khoand3012/bookmark-management/docs"
 	"github.com/khoand3012/bookmark-management/internal/handler"
 	"github.com/khoand3012/bookmark-management/internal/service"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 type Engine interface {
@@ -32,10 +35,13 @@ func (e *engine) Start() error {
 func (e *engine) initRoutes() {
 	genPassSvc := service.NewGenPass()
 	genPassHandler := handler.NewGenPass(genPassSvc)
+	e.app.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
 	e.app.GET("/genpass", genPassHandler.GeneratePassword)
 
 	healthCheckSvc := service.NewHealthCheck(e.cfg.ServiceName, e.cfg.InstanceId)
 	healthCheckHandler := handler.NewHealthCheck(healthCheckSvc)
+
 	e.app.GET("/health-check", healthCheckHandler.CheckHealth)
 }
 
